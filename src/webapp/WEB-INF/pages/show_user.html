@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="container">
+    <p class="h3">Информация о пользователе</p>
     <table class="table table-hover table-sm">
         <thead>
         <tr>
@@ -20,35 +21,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${#lists.isEmpty(users)}">
-            <td colspan="3"> Список пользователей пуст</td>
-        </tr>
-        <tr th:each="user: ${users}">
+        <tr>
             <td><span th:text=" ${user.id}"> id </span></td>
             <td><span th:text=" ${user.name}"> Имя </span></td>
             <td><span th:text=" ${user.surname}"> Фамилия </span></td>
             <td><span th:text=" ${user.email}"> Email </span></td>
-            <td><span>
-                <a class="btn btn-link" th:href="@{/{id}/edit(id=${user.getId()})}" role="button"> Изменить </a>
-                <form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">
-                    <button type="submit" class="btn btn-link"> Удалить</button>
-                </form>
-
-            </span>
-            </td>
         </tr>
+
+
         </tbody>
     </table>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <a class="btn btn-primary" href="/new" role="button">Добавить пользователя</a>
-            </div>
-        </div>
-    </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
