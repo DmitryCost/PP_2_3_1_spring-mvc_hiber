@@ -2,16 +2,18 @@ package web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
-import java.util.List;
+import javax.validation.Valid;
+
 
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -19,8 +21,7 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String home(ModelMap model) {
-        List<User> users = userService.listAll();
-        model.addAttribute("users", users);
+        model.addAttribute("users", userService.listAll());
         return "index";
     }
     @GetMapping(value = "/{id}")
@@ -34,7 +35,10 @@ public class UserController {
         return "new_user";
     }
     @PostMapping
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "new_user";
+        }
         userService.save(user);
         return "redirect:/";
     }
@@ -44,7 +48,11 @@ public class UserController {
         return "edit_user";
     }
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                         @PathVariable("id") Long id) {
+        if(bindingResult.hasErrors()) {
+            return "edit_user";
+        }
         userService.update(id, user);
         return "redirect:/";
     }

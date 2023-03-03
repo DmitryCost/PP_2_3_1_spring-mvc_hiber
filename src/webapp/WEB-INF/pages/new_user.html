@@ -15,14 +15,17 @@
         <div class="form-group">
             <label for="name">Имя:</label>
             <input type="text" th:field="*{name}" class="form-control" id="name">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
         </div>
         <div class="form-group">
-            <label for="lastName">Фамилия:</label>
-            <input type="text" th:field="*{surname}" class="form-control" id="lastName">
+            <label for="surname">Фамилия:</label>
+            <input type="text" th:field="*{surname}" class="form-control" id="surname">
+            <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</div>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="text" th:field="*{email}" class="form-control" id="email">
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
         </div>
         <button type="submit" class="btn btn-default">Сохранить</button>
     </form>
